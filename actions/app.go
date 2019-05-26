@@ -58,8 +58,16 @@ func App() *buffalo.App {
 		// Setup and use translations:
 		app.Use(translations())
 
+		// system
+		app.GET("/routes", RoutesHandler)
 		app.GET("/", HomeHandler)
 
+		// Sessions
+		app.GET("/sessions/new", SessionsNewHandler)
+		app.PUT("/sessions/create", SessionsCreateHandler)
+
+		app.GET("/regestrations/new", RegestrationsNew)
+		app.GET("/regestrations/create", RegestrationsCreate)
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 

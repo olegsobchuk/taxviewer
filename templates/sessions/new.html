@@ -1,0 +1,9 @@
+<div>Log In page</div>
+<div>
+  <!-- https://github.com/gobuffalo/tags/wiki/HiddenTag -->
+  <%= form({action: sessionsCreatePath(), method: "PUT"}) { %>
+    <%= f.InputTag({name: "email", label: "Email"}) %>
+    <%= f.InputTag({name: "password", label: "Password", type: "password"}) %>
+    <%= f.SubmitTag("Send") %>
+  <% } %>
+</div>

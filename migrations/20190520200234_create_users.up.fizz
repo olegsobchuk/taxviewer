@@ -1,0 +1,8 @@
+sql("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";")
+create_table("users") {
+	t.Column("id", "uuid", {primary: true, "default_raw": "uuid_generate_v4()"})
+	t.Column("email", "string", {"null": false})
+	t.Column("enc_password", "string")
+	t.Timestamps()
+	t.Index("email", {"unique": true})
+}

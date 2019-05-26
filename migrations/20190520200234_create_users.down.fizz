@@ -1,0 +1,2 @@
+drop_table("users")
+sql("DROP EXTENSION IF EXISTS \"uuid-ossp\";")
