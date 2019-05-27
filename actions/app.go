@@ -66,8 +66,8 @@ func App() *buffalo.App {
 		app.GET("/sessions/new", SessionsNewHandler)
 		app.PUT("/sessions/create", SessionsCreateHandler)
 
-		app.GET("/regestrations/new", RegestrationsNew)
-		app.GET("/regestrations/create", RegestrationsCreate)
+		app.GET("/registrations/new", RegistrationsNew)
+		app.POST("/registrations/create", RegistrationsCreate)
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 
