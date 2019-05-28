@@ -2,9 +2,11 @@ package models
 
 import (
 	"encoding/json"
+	"strings"
 	"time"
 
 	"github.com/gobuffalo/validate/validators"
+	"github.com/pkg/errors"
 
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
@@ -39,6 +41,16 @@ func (u Users) String() string {
 	return string(ju)
 }
 
+// Create validate and create user if valid
+func (u *User) Create(tx *pop.Connection) (*validate.Errors, error) {
+	u.Email = strings.ToLower(u.Email)
+	err := u.GeneratePassword()
+	if err != nil {
+		return validate.NewErrors(), errors.WithStack(err)
+	}
+	return tx.ValidateAndCreate(u)
+}
+
 // Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
 // This method is not required and may be deleted.
 // example https://github.com/gobuffalo/authrecipe/blob/master/models/user.go
@@ -56,10 +68,15 @@ func (u *User) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 	var err error
 
 	return validate.Validate(
-		&validators.EmailIsPresent{Name: "Email", Field: u.Email},
 		&validators.StringIsPresent{Name: "EncPassword", Field: u.EncPassword},
 		&validators.StringLengthInRange{Name: "Password", Field: u.Password, Min: 6, Max: 60},
-		&validators.StringsMatch{Name: "Password", Field: u.Password, Field2: u.PasswordConfirmation},
+		&validators.StringsMatch{
+			Name:    "PasswordConfirmation",
+			Field:   u.Password,
+			Field2:  u.PasswordConfirmation,
+			Message: "Password doesn't match",
+		},
+		// check if email already exists
 		&validators.FuncValidator{
 			Field:   u.Email,
 			Name:    "Email",
@@ -87,20 +104,20 @@ func (u *User) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
 }
 
 // GeneratePassword generates hashed pass
-func (u *User) GeneratePassword(pass string) (string, error) {
-	saltedBytes := []byte(pass)
+func (u *User) GeneratePassword() error {
+	saltedBytes := []byte(u.Password)
 	hashedBytes, err := bcrypt.GenerateFromPassword(saltedBytes, bcrypt.DefaultCost)
 	if err != nil {
-		return "", err
+		return errors.WithStack(err)
 	}
-	hash := string(hashedBytes[:])
-	return hash, nil
+	u.EncPassword = string(hashedBytes[:])
+	return nil
 }
 
 // CheckPassword checks if password match
-func (u *User) CheckPassword(pass string) bool {
+func (u *User) CheckPassword() bool {
 	hash := []byte(u.EncPassword)
-	p := []byte(pass)
+	p := []byte(u.Password)
 
 	if err := bcrypt.CompareHashAndPassword(hash, p); err != nil {
 		return false

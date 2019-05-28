@@ -2,10 +2,10 @@
 
 <div>
   <!-- https://github.com/gobuffalo/tags/wiki/HiddenTag -->
-  <%= form({action: registrationsCreatePath(), method: "POST"}) { %>
-    <%= f.InputTag({name: "email", label: "Email"}) %>
-    <%= f.InputTag({name: "password", label: "Password", type: "password"}) %>
-    <%= f.InputTag({name: "password_confirmation", label: "Password Confirmation", type: "password"}) %>
-    <%= f.SubmitTag("Send") %>
+  <%= form_for(user, {action: registrationsCreatePath(), method: "POST"}) { %>
+    <%= f.InputTag("Email") %>
+    <%= f.InputTag("Password", {type: "password"}) %>
+    <%= f.InputTag("PasswordConfirmation", {type: "password"}) %>
+    <%= f.SubmitTag("Send",{class: "btn btn-success"}) %>
   <% } %>
 </div>
