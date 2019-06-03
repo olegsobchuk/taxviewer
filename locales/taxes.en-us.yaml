@@ -1,0 +1,6 @@
+- id: "tax.created.success"
+  translation: "Tax was successfully created."
+- id: "tax.updated.success"
+  translation: "Tax was successfully updated."
+- id: "tax.destroyed.success"
+  translation: "Tax was successfully destroyed."

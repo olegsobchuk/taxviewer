@@ -59,6 +59,24 @@ CREATE TABLE public.schema_migration (
 ALTER TABLE public.schema_migration OWNER TO postgres;
 
 --
+-- Name: taxes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.taxes (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    date timestamp with time zone NOT NULL,
+    amount numeric NOT NULL,
+    currency integer NOT NULL,
+    exchange numeric,
+    exchanged numeric,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.taxes OWNER TO postgres;
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -72,6 +90,14 @@ CREATE TABLE public.users (
 
 
 ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: taxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.taxes
+    ADD CONSTRAINT taxes_pkey PRIMARY KEY (id);
+
 
 --
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres

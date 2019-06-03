@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit Tax</h1>
+</div>
+
+<%= form_for(tax, {action: taxPath({ tax_id: tax.ID }), method: "PUT"}) { %>
+  <%= partial("taxes/form.html") %>
+  <a href="<%= taxPath({ tax_id: tax.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>

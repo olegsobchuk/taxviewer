@@ -1,0 +1,10 @@
+<div class="page-header">
+  <h1>Tax#Show</h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+  <li class="list-inline-item"><a href="<%= taxesPath() %>" class="btn btn-info">Back to all Taxes</a></li>
+  <li class="list-inline-item"><a href="<%= editTaxPath({ tax_id: tax.ID })%>" class="btn btn-warning">Edit</a></li>
+  <li class="list-inline-item"><a href="<%= taxPath({ tax_id: tax.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</ul>
+

@@ -7,4 +7,3 @@ func (as *ActionSuite) Test_Regestrations_New() {
 func (as *ActionSuite) Test_Regestrations_Create() {
 	as.Fail("Not Implemented!")
 }
-

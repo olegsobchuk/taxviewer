@@ -1,0 +1,9 @@
+create_table("taxes") {
+	t.Column("id", "uuid", {primary: true, "default_raw": "uuid_generate_v4()"})
+	t.Column("date", "datetime", {})
+	t.Column("amount", "decimal", {})
+	t.Column("currency", "integer", {})
+	t.Column("exchange", "decimal", {"null": true})
+	t.Column("exchanged", "decimal", {"null": true})
+	t.Timestamps()
+}
