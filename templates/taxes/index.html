@@ -14,17 +14,18 @@
     <th>After Exchange</th>
     <th>Updated At</th>
     <th>Created At</th>
+    <th></th>
   </thead>
   <tbody>
     <%= for (tax) in taxes { %>
       <tr>
-        <td><%= tax.Date %></td>
+        <td><%= tax.Date.Format("15:04 01/02/2006") %></td>
         <td><%= tax.Amount %></td>
         <td><%= tax.Currency %></td>
         <td><%= tax.Exchange %></td>
         <td><%= tax.Exchanged %></td>
-        <td><%= tax.UpdatedAt %></td>
-        <td><%= tax.CreatedAt %></td>
+        <td><%= tax.UpdatedAt.Format("15:04 01/02/2006") %></td>
+        <td><%= tax.CreatedAt.Format("15:04 01/02/2006") %></td>
         <td>
           <div class="pull-right">
             <a href="<%= taxPath({ tax_id: tax.ID }) %>" class="btn btn-info">View</a>
